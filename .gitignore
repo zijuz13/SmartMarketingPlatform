@@ -1,0 +1,6 @@
+/.idea/
+/market-eureka/target/
+/market-relationship/target/
+/market-search/target/
+/market-sms/target/
+/market-zuul/target/
