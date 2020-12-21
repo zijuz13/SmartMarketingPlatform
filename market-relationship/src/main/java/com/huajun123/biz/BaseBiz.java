@@ -7,6 +7,9 @@ public class BaseBiz<T> implements IBaseBiz<T> {
     protected void setMapper(Mapper<T> mapper){
         this.mapper=mapper;
     }
+    protected Mapper<T> getMapper(){
+        return mapper;
+    }
     @Override
     public int createItem(T t) {
         return mapper.insertSelective(t);

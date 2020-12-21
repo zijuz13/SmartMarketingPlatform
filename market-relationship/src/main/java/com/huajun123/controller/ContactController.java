@@ -4,12 +4,20 @@ import com.huajun123.entity.Contact;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequestMapping("contact")
+@Controller
 public class ContactController {
     @Autowired
     private IContactBiz biz;
+    @GetMapping
+    public ResponseEntity<List<Contact>> getContactsByCriteria(Contact contact){
+        return ResponseEntity.status(HttpStatus.OK).body(biz.getContactsByCriteria(contact));
+    }
     @GetMapping("{id}")
     public ResponseEntity<Contact> getContactById(@PathVariable("id")Long id){
         return ResponseEntity.status(HttpStatus.OK).body(biz.getItem(id));
