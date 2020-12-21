@@ -12,6 +12,7 @@
         <module>market-zuul</module>
         <module>market-eureka</module>
         <module>market-search</module>
+        <module>market-entity</module>
     </modules>
     <packaging>pom</packaging>
     <parent>

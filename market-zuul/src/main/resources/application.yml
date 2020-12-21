@@ -1,0 +1,17 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: market-zuul
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    registry-fetch-interval-seconds: 10
+    service-url:
+      defaultZone: http://localhost:8080/eureka
+  instance:
+    lease-renewal-interval-in-seconds: 5
+    lease-expiration-duration-in-seconds: 10
+zuul:
+  prefix: api

@@ -1,0 +1,16 @@
+server:
+  port: 8082
+spring:
+  application:
+    name: market-relationship
+  datasource:
+    url: jdbc:mysql:///market?serverTimezone=UTC&characterEncoding=UTF-8
+    username: root
+    password: huajun123
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8080/eureka
+  instance:
+    lease-expiration-duration-in-seconds: 10
+    lease-renewal-interval-in-seconds: 5
