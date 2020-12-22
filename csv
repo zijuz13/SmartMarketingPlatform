@@ -17,6 +17,7 @@ public class LoadUtils {
         try{
             reader=new BufferedReader(new FileReader(filePath));
             String line=reader.readLine();
+            //Read the first line in order to specify the order of the properties that should be wired
             String[] lookup = line.split(",");
             line=reader.readLine();
             List<User> users=new ArrayList<User>();
