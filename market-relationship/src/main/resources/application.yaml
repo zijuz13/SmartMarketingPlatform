@@ -2,7 +2,7 @@ server:
   port: 8082
 spring:
   application:
-    name: market-relationship
+    name: contact-service
   datasource:
     url: jdbc:mysql:///market?serverTimezone=UTC&characterEncoding=UTF-8
     username: root

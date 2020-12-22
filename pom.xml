@@ -13,6 +13,7 @@
         <module>market-eureka</module>
         <module>market-search</module>
         <module>market-entity</module>
+        <module>market-gateway</module>
     </modules>
     <packaging>pom</packaging>
     <parent>
