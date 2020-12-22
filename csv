@@ -1,0 +1,48 @@
+package com.huajun123.utils;
+
+import com.huajun123.utils.entity.User;
+import java.beans.IntrospectionException;
+import java.beans.PropertyDescriptor;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.List;
+
+public class LoadUtils {
+    private static final String filePath="D:\\test1.csv";
+    public void printFileInfo(){
+        BufferedReader reader=null;
+        try{
+            reader=new BufferedReader(new FileReader(filePath));
+            String line=reader.readLine();
+            String[] lookup = line.split(",");
+            line=reader.readLine();
+            List<User> users=new ArrayList<User>();
+            while(null!=line){
+                User user = this.convertLineToEntity(lookup, line);
+                users.add(user);
+                line=reader.readLine();
+            }
+            System.out.println(users);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+    // Convert Line Into User
+    private User convertLineToEntity(String[] lookUp,String line) throws IntrospectionException, InvocationTargetException, IllegalAccessException {
+        User user=new User();
+        String[] split = line.split(",");
+        for(int i=0;i< split.length;i++){
+            String s = lookUp[i];
+            PropertyDescriptor descriptor=new PropertyDescriptor(s,User.class);
+            Method writeMethod = descriptor.getWriteMethod();
+            if(!s.equalsIgnoreCase("guid"))
+            writeMethod.invoke(user,split[i]);
+            else
+                writeMethod.invoke(user,Long.parseLong(split[i]));
+        }
+        return user;
+    }
+}
