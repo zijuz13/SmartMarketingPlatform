@@ -1,23 +1,30 @@
 package com.huajun123.utils;
 
 import com.huajun123.utils.entity.User;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
+import java.io.InputStreamReader;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
-
+@Service
 public class LoadUtils {
     private static final String filePath="D:\\test1.csv";
-    public void printFileInfo(){
+    private static Logger LOGGER= LoggerFactory.getLogger(LoadUtils.class);
+    public void printFileInfo(MultipartFile file){
         BufferedReader reader=null;
         try{
-            reader=new BufferedReader(new FileReader(filePath));
+            reader=new BufferedReader(new InputStreamReader(file.getInputStream(),"UTF-8"));
             String line=reader.readLine();
-            //Read the first line in order to specify the order of the properties that should be wired
             String[] lookup = line.split(",");
             line=reader.readLine();
             List<User> users=new ArrayList<User>();
@@ -26,9 +33,9 @@ public class LoadUtils {
                 users.add(user);
                 line=reader.readLine();
             }
-            System.out.println(users);
+            LOGGER.info("users:{}",users);
         }catch (Exception e){
-            e.printStackTrace();
+           LOGGER.error("error",e.getMessage());
         }
     }
     // Convert Line Into User
