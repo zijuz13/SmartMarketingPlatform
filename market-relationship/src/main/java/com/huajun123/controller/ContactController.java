@@ -1,14 +1,14 @@
 package com.huajun123.controller;
 import com.huajun123.biz.IContactBiz;
 import com.huajun123.entity.Contact;
+import com.huajun123.utils.SearchRequest;
+import com.huajun123.utils.SearchResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 import java.util.Map;
 
 @RequestMapping("contact")
@@ -17,8 +17,9 @@ public class ContactController {
     @Autowired
     private IContactBiz biz;
     @GetMapping
-    public ResponseEntity<List<Contact>> getContactsByCriteria(Contact contact){
-        return ResponseEntity.status(HttpStatus.OK).body(biz.getContactsByCriteria(contact));
+            public ResponseEntity<SearchResult> getContactsByCriteria(SearchRequest contact){
+        SearchResult contactsByCriteria = biz.getContactsByCriteria(contact);
+        return ResponseEntity.status(HttpStatus.OK).body(contactsByCriteria);
     }
     @GetMapping("{id}")
     public ResponseEntity<Contact> getContactById(@PathVariable("id")Long id){
@@ -30,7 +31,7 @@ public class ContactController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     @PostMapping
-    public ResponseEntity<Void> createContact(Contact contact){
+    public ResponseEntity<Void> createContact(@RequestBody Contact contact){
         biz.createItem(contact);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
@@ -40,7 +41,7 @@ public class ContactController {
         return ResponseEntity.status(HttpStatus.OK).body(stringObjectMap);
     }
     @PutMapping
-    public ResponseEntity<Void> updateContact(Contact contact){
+    public ResponseEntity<Void> updateContact(@RequestBody Contact contact){
         biz.updateItem(contact);
         return ResponseEntity.status(HttpStatus.OK).build();
     }

@@ -1,12 +1,12 @@
 server:
-  port: 10011
+  port: 8081
 spring:
   application:
     name: market-zuul
 zuul:
   prefix: /api
   routes:
-    contact-service: /contact/**
+    contact-service: /contacter/**
 eureka:
   client:
     service-url:
