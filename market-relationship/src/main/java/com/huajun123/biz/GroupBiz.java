@@ -44,7 +44,8 @@ public class GroupBiz extends BaseBiz<Group> implements IGroupBiz{
         group.setImporttime(""+System.currentTimeMillis());
         group.setUpdatetime(null);
         group.setUpdator(null);
-        group.setContacts(this.analyzeCorrespondingContacts(group.getCon()));
+        if(!StringUtils.isEmpty(group.getCon()))
+        this.analyzeCorrespondingContacts(group);
         return super.createItem(group);
     }
     //用来封装解析条件
@@ -76,7 +77,8 @@ public class GroupBiz extends BaseBiz<Group> implements IGroupBiz{
         }
     }
     private static final Logger LOGGER= LoggerFactory.getLogger(GroupBiz.class);
-    private String analyzeCorrespondingContacts(String con){
+    private void analyzeCorrespondingContacts(Group group){
+        String con=group.getCon();
         List<Decider> list=new ArrayList<>();
         for (String subCondition : con.split(";")) {
             if(subCondition.contains("包含")){
@@ -106,13 +108,17 @@ public class GroupBiz extends BaseBiz<Group> implements IGroupBiz{
             }
             return flag;
         }).map(Contact::getGuid).collect(Collectors.toList());
-        return StringUtils.join(collect,",");
+        group.setContacts(StringUtils.join(collect,","));
+        group.setTotal(collect.size());
     }
     @Override
     public int updateItem(Group group) {
         group.setImporttime(null);
         group.setCreator(null);
         group.setUpdatetime(""+System.currentTimeMillis());
+        if(!StringUtils.isEmpty(group.getCon())&&!this.getMapper().selectByPrimaryKey(group.getGuid()).getCon().equalsIgnoreCase(group.getCon())){
+            this.analyzeCorrespondingContacts(group);
+        }
         return super.updateItem(group);
     }
 
@@ -135,6 +141,7 @@ public class GroupBiz extends BaseBiz<Group> implements IGroupBiz{
             example.setOrderByClause("guid desc");
         }
         List<Group> groups = this.getMapper().selectByExample(example);
+        groups.forEach(System.out::println);
         PageInfo<Group> info = new PageInfo<>(groups);
         return new SearchResult<>(groups,Integer.parseInt(""+info.getTotal()),Integer.parseInt(info.getPages()+""));
     }

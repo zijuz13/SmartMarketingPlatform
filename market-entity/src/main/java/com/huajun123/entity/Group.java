@@ -17,7 +17,7 @@ public class Group {
     private String importtime;
     private String updatetime;
     private String updator;
-    private int total;
+    private Integer total;
     private String contacts;
     private String con;
 }

@@ -27,12 +27,12 @@ public class GroupController {
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     @PutMapping
-    public ResponseEntity<Void> updateGroup(Group group){
+    public ResponseEntity<Void> updateGroup(@RequestBody Group group){
         biz.updateItem(group);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
     @PostMapping
-    public ResponseEntity<Void> createGroup(Group group){
+    public ResponseEntity<Void> createGroup(@RequestBody Group group){
         biz.createItem(group);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
