@@ -4,6 +4,7 @@ import com.github.pagehelper.PageInfo;
 import com.huajun123.entity.Contact;
 import com.huajun123.entity.Group;
 import com.huajun123.mappers.GroupMapper;
+import com.huajun123.utils.GenericCriteriaUtils;
 import com.huajun123.utils.LoadUtils;
 import com.huajun123.utils.SearchRequest;
 import com.huajun123.utils.SearchResult;
@@ -32,6 +33,8 @@ public class ContactBiz extends BaseBiz<Contact> implements IContactBiz {
     private BeanFactory factory;
     @Autowired
     private GroupMapper mapper1;
+    @Autowired
+    private GenericCriteriaUtils utils1;
     @PostConstruct
     public void construct(){
         this.setMapper((Mapper<Contact>) factory.getBean("contactMapper"));
@@ -48,14 +51,7 @@ public class ContactBiz extends BaseBiz<Contact> implements IContactBiz {
         Example example=new Example(Contact.class);
         Example.Criteria criteria = example.createCriteria();
         try{
-            Field[] declaredFields = Contact.class.getDeclaredFields();
-            for (Field declaredField : declaredFields) {
-                declaredField.setAccessible(true);
-                Object o = declaredField.get(contact);
-                if(null!=o&&!StringUtils.isEmpty(o.toString())){
-                    criteria.andCondition("  "+declaredField.getName()+" like  "+"'"+'%'+o+'%'+"'");
-                }
-            }
+            utils1.addGenericCriteria(criteria,Contact.class,contact);
             if(null!=group) {
                 String contacts = group.getContacts();
 //                Arrays.asList(contacts.split(",")).stream().map(Long::parseLong).collect(Collectors.toList()).forEach(id->{
