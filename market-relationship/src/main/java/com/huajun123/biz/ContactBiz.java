@@ -8,7 +8,6 @@ import com.huajun123.utils.GenericCriteriaUtils;
 import com.huajun123.utils.LoadUtils;
 import com.huajun123.utils.SearchRequest;
 import com.huajun123.utils.SearchResult;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.BeanFactory;
@@ -19,12 +18,10 @@ import org.springframework.web.multipart.MultipartFile;
 import tk.mybatis.mapper.common.Mapper;
 import tk.mybatis.mapper.entity.Example;
 import javax.annotation.PostConstruct;
-import java.lang.reflect.Field;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Service
 @Transactional
