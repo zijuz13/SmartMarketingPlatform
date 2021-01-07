@@ -12,4 +12,9 @@ public class Email {
     private String category;
     private String content;
     private String name;
+    private Boolean type;
+    private String creator;
+    private String updatetime;
+    private String createtime;
+    private String updator;
 }

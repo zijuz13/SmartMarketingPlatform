@@ -141,7 +141,6 @@ public class GroupBiz extends BaseBiz<Group> implements IGroupBiz{
             example.setOrderByClause("guid desc");
         }
         List<Group> groups = this.getMapper().selectByExample(example);
-        groups.forEach(System.out::println);
         PageInfo<Group> info = new PageInfo<>(groups);
         return new SearchResult<>(groups,Integer.parseInt(""+info.getTotal()),Integer.parseInt(info.getPages()+""));
     }
