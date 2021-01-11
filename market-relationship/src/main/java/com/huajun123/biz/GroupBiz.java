@@ -113,9 +113,9 @@ public class GroupBiz extends BaseBiz<Group> implements IGroupBiz{
     }
     @Override
     public int updateItem(Group group) {
-        group.setImporttime(null);
-        group.setCreator(null);
-        group.setUpdatetime(""+System.currentTimeMillis());
+            group.setImporttime(null);
+            group.setCreator(null);
+            group.setUpdatetime(""+System.currentTimeMillis());
         if(!StringUtils.isEmpty(group.getCon())&&!this.getMapper().selectByPrimaryKey(group.getGuid()).getCon().equalsIgnoreCase(group.getCon())){
             this.analyzeCorrespondingContacts(group);
         }
